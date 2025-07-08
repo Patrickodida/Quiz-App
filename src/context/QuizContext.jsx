@@ -3,7 +3,7 @@ import { questions } from '../data/questions';
 
 const QuizContext = createContext();
 
-export const QuizProvider = ({ Children }) => {
+export const QuizProvider = ({ children }) => {
     const [currentQuestion, setCurrentQuestion] = useState(0);
     const [score, setScore] = useState(0);
     const [quizFinished, setQuizFinished] = useState(false);
@@ -26,7 +26,7 @@ export const QuizProvider = ({ Children }) => {
     return (
         <QuizContext.Provider
         value={{ questions, currentQuestion, score, quizFinished, nextQuestion, resetQuiz }}>
-            { Children }
+            { children }
         </QuizContext.Provider>
     )
 }
