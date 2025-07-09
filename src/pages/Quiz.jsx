@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useQuiz } from '../context/QuizContext';
 import { useNavigate } from "react-router-dom";
 import QuestionCard from "../components/QuestionsCard";
 
 const Quiz = () => {
-    const {questions, currentQuestion, nextQuestion} = useQuiz();
+    const {questions, currentQuestion, nextQuestion, quizFinished, timeLeft} = useQuiz();
     const q = questions[currentQuestion];
     const navigate = useNavigate();
 
@@ -16,12 +16,25 @@ const Quiz = () => {
         }
     };
 
+    // Redirect if time is up
+    useEffect(() => {
+        if(quizFinished) {
+            navigate("/result");
+        }
+    }, [quizFinished, navigate])
+
+
     return (
-        <QuestionCard 
-        question={q.question}
-        options={q.options}
-        onSelect={handleAswer}
-        />
+        <div>
+            <div className="text-center mt-4 text-lg text-red-600 font-semibold">
+                Time Left: {timeLeft > 0 ? timeLeft: 0} seconds
+            </div>
+            <QuestionCard 
+            question={q.question}
+            options={q.options}
+            onSelect={handleAswer}
+            />
+        </div>
     )
 }
 export default Quiz;
