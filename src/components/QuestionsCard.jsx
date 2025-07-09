@@ -1,5 +1,4 @@
 import React from "react";
-import { questions } from '../data/questions';
 
 const QuestionsCard = ({ question, options, onSelect }) => {
     return (
