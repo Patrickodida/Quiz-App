@@ -5,12 +5,12 @@ import QuestionCard from "../components/QuestionsCard";
 
 const Quiz = () => {
     const {questions, currentQuestion, nextQuestion, quizFinished, timeLeft} = useQuiz();
-    const q = questions[currentQuestion];
+    const q = questions[currentQuestion] || {};
     const navigate = useNavigate();
 
     const handleAswer = (selectedOption) => {
         const isCorrect = selectedOption === q.answer;
-        nextQuestion(isCorrect);
+        nextQuestion(isCorrect, selectedOption);
         if(currentQuestion === questions.length - 1){
             navigate("/result");
         }
