@@ -9,6 +9,7 @@ const Result = () => {
 
     const passedAll = score === total;
     const highScore = percentage >= 80;
+    const belowAverage = percentage < 80;
 
     const [filter, setFilter] = useState("all");
 
@@ -42,6 +43,12 @@ const Result = () => {
             {highScore && (
                 <p className="text-green-600 font-semibold text-lg mb-4">
                     🎉 Congrats! You did really well!
+                </p>
+            )}
+
+            {belowAverage && (
+                <p className="text-red-500 font-semibold text-lg mb-4">
+                        Below average
                 </p>
             )}
 
