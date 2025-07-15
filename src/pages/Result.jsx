@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useQuiz } from "../context/QuizContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Result = () => {
-    const {score, questions, resetQuiz, userAnswers} = useQuiz();
+    const {score, questions, resetQuiz, userAnswers, quizFinished} = useQuiz();
     const total = questions.length;
     const percentage = (score / total) * 100;
 
@@ -21,6 +21,15 @@ const Result = () => {
         if (filter === "unanswered") return ans.selected === null;
         return true;
     });
+
+    const navigate = useNavigate();
+
+    // Redirect to Home page if the quiz is not completed
+    useEffect(() => {
+        if (!quizFinished) {
+            navigate("/");
+        }
+    }, [quizFinished, navigate]);
 
     const renderFilterButton = (label, value) => (
         <button

@@ -10,7 +10,7 @@ export const QuizProvider = ({ children }) => {
     const [timeLeft, setTimeLeft] = useState(60);
     const [userAnswers, setUserAnswers] = useState([]);
 
-    // Timer Logic
+    // Add Timer
     useEffect(() => {
         if(quizFinished) return;
 
@@ -26,12 +26,12 @@ export const QuizProvider = ({ children }) => {
         return () => clearInterval(timer);
     }, [quizFinished]);
 
-        // ✅ 2. ADDED: Append unanswered questions when quiz finishes
+        // Append unanswered questions when quiz finishes
     useEffect(() => {
         if (!quizFinished) return;
 
         setUserAnswers(prev => {
-            const answered = new Set(prev.map(ans => ans.question));  // ✅ moved here safely
+            const answered = new Set(prev.map(ans => ans.question));
             const unanswered = questions
                 .filter(q => !answered.has(q.question))
                 .map(q => ({
@@ -41,9 +41,9 @@ export const QuizProvider = ({ children }) => {
                     isCorrect: false
                 }));
 
-            return [...prev, ...unanswered];  // ✅ now correct
+            return [...prev, ...unanswered];
         });
-    }, [quizFinished]);  // ✅ NEW useEffect hook
+    }, [quizFinished]);
 
     const nextQuestion = (isCorrect, selectedOption) => {
         const currentQ = questions[currentQuestion];
